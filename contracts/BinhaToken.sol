@@ -2,18 +2,18 @@
 pragma solidity ^0.8.26;
 
 /**
- * @title ERC20 contract.
+ * @title BinhaToken contract.
  * @author felipetojal
- * @notice ERC20 is an ERC-20 interface created for educational purposes.
+ * @notice BinhaToken is an ERC-20 implementation created for educational purposes.
  */
-contract ERC20 {
-    string internal token_name;
-    string internal token_symbol;
+contract BinhaToken {
+    string internal token_name = "BINHA";
+    string internal token_symbol = "BIN";
     uint256 internal token_total_supply;
     /**
      * @notice Returns the number of decimals the token uses.
      */
-    uint8 internal token_decimals;
+    uint8 internal constant token_decimals = 18;
 
     /**
      * @dev Maps account address to account balance.
@@ -26,12 +26,8 @@ contract ERC20 {
      */
     mapping(address => mapping(address => uint256)) internal allowances;
 
-    constructor(string memory _token_name, string memory _token_symbol, uint8 _token_decimals, uint256 _token_total_supply) {
-        token_name = _token_name;
-        token_symbol = _token_symbol;
-        token_decimals = _token_decimals;
-        token_total_supply = _token_total_supply * (10 ** (uint256(_token_decimals)));
-
+    constructor() {
+        token_total_supply = 1_000_000_000 * (uint256(10 ** token_decimals));
         balances[msg.sender] = token_total_supply;
     }
 
@@ -62,7 +58,7 @@ contract ERC20 {
      * @dev Getter function for the token decimals.
      * @return token_decimals
      */
-    function decimals() external view returns (uint8) {
+    function decimals() external pure returns (uint8) {
         return token_decimals;
     }
 
